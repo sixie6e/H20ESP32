@@ -1,7 +1,7 @@
 from machine import Pin, PWM, I2C
 from ssd1306 import SSD1306_I2C
 import time
-i2c = I2C(0, sda=Pin(23, pull=Pin.PULL_UP, scl=Pin(24, pull=Pin.PULL_UP))
+i2c = I2C(0, sda=Pin(23, pull=Pin.PULL_UP, scl=Pin(24, pull=Pin.PULL_UP)))
 oled = SSD1306_I2C(128, 64, i2c)
 oled.fill(0)
 oled.rect(0, 0, 127, 63, 1)
@@ -33,7 +33,7 @@ in1.value(0)
 in2.value(0)
 def w_motor_speed(wspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
-        if 0 <= wspeed <= 1023:
+    if 0 <= wspeed <= 1023:
         pwm_ena.duty(wspeed)
         oled.text(wspeed, 5, 12, 1)
     else:
@@ -79,7 +79,7 @@ in3.value(0)
 in4.value(0)
 def a_motor_speed(aspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
-        if 0 <= speed <= 1023:
+    if 0 <= speed <= 1023:
         pwm_enb.duty(aspeed)
         oled.text(aspeed, 5, 22, 1)
     else:
