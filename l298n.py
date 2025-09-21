@@ -1,7 +1,28 @@
 from machine import Pin, PWM, I2C
 from ssd1306 import SSD1306_I2C
 import time
+i2c = I2C(0, sda=Pin(23, pull=Pin.PULL_UP, scl=Pin(24, pull=Pin.PULL_UP))
+oled = SSD1306_I2C(128, 64, i2c)
+oled.fill(0)
+oled.rect(0, 0, 127, 63, 1)
 
+# water sensor
+wsensor_pwr = 16 
+wsensor_signal = 36 
+power = Pin(wsensor_pwr, Pin.OUT)
+power.value(0) 
+wsignal = ADC(Pin(wsensor_signal))
+wsignal.width(ADC.WIDTH_12BIT)
+wsignal.atten(ADC.ATTN_11DB)
+while True:
+    power.value(1) 
+    time.sleep(0.01) 
+    value = signal.read()
+    power.value(0) 
+    print("Sensor value:", value) 
+    time.sleep(1)
+
+# motor
 ena = 32
 in1 = 33
 in2 = 34
@@ -10,20 +31,6 @@ in1 = Pin(in1, Pin.OUT)
 in2 = Pin(in2, Pin.OUT)
 in1.value(0)
 in2.value(0)
-enb = 21
-in3 = 19
-in4 = 18
-pwm_enb = PWM(Pin(enb), freq=100, duty=0)
-in3 = Pin(in3, Pin.OUT)
-in4 = Pin(in4, Pin.OUT)
-in3.value(0)
-in4.value(0)
-i2c = I2C(0, sda=Pin(23, pull=Pin.PULL_UP, scl=Pin(24, pull=Pin.PULL_UP))
-oled = SSD1306_I2C(128, 64, i2c)
-oled.fill(0)
-oled.rect(0, 0, 127, 63, 1)
-
-# water
 def w_motor_speed(wspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
         if 0 <= wspeed <= 1023:
@@ -62,6 +69,14 @@ except Exception as e:
     w_run_pump(0, 0)
 
 # air
+enb = 21
+in3 = 19
+in4 = 18
+pwm_enb = PWM(Pin(enb), freq=100, duty=0)
+in3 = Pin(in3, Pin.OUT)
+in4 = Pin(in4, Pin.OUT)
+in3.value(0)
+in4.value(0)
 def a_motor_speed(aspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
         if 0 <= speed <= 1023:
