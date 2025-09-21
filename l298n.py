@@ -1,4 +1,5 @@
-from machine import Pin, PWM
+from machine import Pin, PWM, I2C
+from ssd1306 import SSD1306_I2C
 import time
 
 ena = 32
@@ -17,25 +18,30 @@ in3 = Pin(in3, Pin.OUT)
 in4 = Pin(in4, Pin.OUT)
 in3.value(0)
 in4.value(0)
+i2c = I2C(0, sda=Pin(19, pull=Pin.PULL_UP, scl=Pin(18, pull=Pin.PULL_UP))
+oled = SSD1306_I2C(128, 64, i2c)
+oled.fill(0)
+oled.rect(0, 0, 127, 63, 1)
 
 # water
-def w_motor_speed(speed):
+def w_motor_speed(wspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
-        if 0 <= speed <= 1023:
-        pwm_ena.duty(speed)
+        if 0 <= wspeed <= 1023:
+        pwm_ena.duty(wspeed)
+        oled.text(wspeed, 5, 12, 1)
     else:
         print("Speed must be between 0 and 1023")
 
-def w_run_pump(direction, speed):
+def w_run_pump(direction, wspeed):
     if direction == 1: 
         in1.value(1)
         in2.value(0)
-        set_motor_speed(speed)
-        print(f"Pump engaged @ {speed}")
+        set_wmotor_speed(wspeed)
+        print(f"Pump engaged @ {wspeed}")
     else:
         in1.value(0)
         in2.value(0)
-        set_motor_speed(0)
+        set_wmotor_speed(0)
         print("Pump disengaged.")
 
 try:
@@ -56,23 +62,24 @@ except Exception as e:
     w_run_pump(0, 0)
 
 # air
-def a_motor_speed(speed):
+def a_motor_speed(aspeed):
     # (0-1023) for a 10-bit PWM duty cycle.
         if 0 <= speed <= 1023:
-        pwm_enb.duty(speed)
+        pwm_enb.duty(aspeed)
+        oled.text(aspeed, 5, 22, 1)
     else:
         print("Speed must be between 0 and 1023")
 
-def a_run_pump(direction, speed):
+def a_run_pump(direction, aspeed):
     if direction == 1: 
         in3.value(1)
         in4.value(0)
-        set_motor_speed(speed)
-        print(f"Pump engaged @ {speed}")
+        set_amotor_speed(aspeed)
+        print(f"Pump engaged @ {aspeed}")
     else:
         in3.value(0)
         in4.value(0)
-        set_motor_speed(0)
+        set_amotor_speed(0)
         print("Pump disengaged.")
 
 try:
