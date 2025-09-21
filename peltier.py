@@ -1,8 +1,7 @@
 from machine import ADC, Pin
 import time
-
-adc_pin= 34
-peltier_pin = 18
+adc_pin= 22
+peltier_pin = 17
 target_temp = 20
 hysteresis = 1
 beta = 3950
@@ -21,7 +20,7 @@ def read_temp():
         return None
     resistance = (3.3*ref_r/voltage)-ref_r    
     try:
-        #I had help with this and I still don't understand why it works.
+        # I had help with this and I still don't understand why it works.
         b_function = 1/((1/ref_t)+(1/beta)*(resistance/nom_r))
         # b_function = 1/((1/290.15)+(1/3950)*(resistance/10000))
         return b_function-273.15
