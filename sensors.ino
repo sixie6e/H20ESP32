@@ -1,21 +1,21 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#define ONE_WIRE_BUS 4
-#define WATER_SENSOR_PIN A0
+#define one_wire_bus 4
+#define water_sensor A0
 
-OneWire oneWire(ONE_WIRE_BUS);
+OneWire oneWire(one_wire_bus);
 DallasTemperature sensors(&oneWire);
 
 void setup() {
   Serial.begin(9600);
   sensors.begin();
-  pinMode(WATER_SENSOR_PIN, INPUT);
+  pinMode(water_sensor, INPUT);
 }
 
 void loop() {
   sensors.requestTemperatures();
   float tempC = sensors.getTempCByIndex(0);
-  int waterLevel = analogRead(WATER_SENSOR_PIN);
+  int waterLevel = analogRead(water_sensor);
   Serial.print(tempC);
   Serial.print(",");
   Serial.println(waterLevel);
