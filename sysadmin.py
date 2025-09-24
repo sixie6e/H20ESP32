@@ -10,7 +10,7 @@ temperature_threshold_high = -90.0
 temperature_threshold_low = -110.0 
 
 try:
-	arduino_serial = serial.Serial(r3port, baud, timeout=1)
+	r3_serial = serial.Serial(r3port, baud, timeout=1)
 	wroom32_serial = serial.Serial(wroom32port, baud, timeout=1)
 	c3_serial = serial.Serial(c3port, baud, timeout=1)
 	time.sleep(2)
