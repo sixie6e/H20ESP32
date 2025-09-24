@@ -41,27 +41,27 @@ def main():
                 
                 if water_level < WATER_THRESHOLD:
                     print("Water sensor triggered. Turning Water Pump ON.")
-                    send_command(ser_wroom, "water_pump_ON")
+                    send_command(ser_wroom, "water_pump_on")
                 else:
                     print("Water sensor clear. Turning Water Pump OFF.")
-                    send_command(ser_wroom, "water_pump_OFF")
+                    send_command(ser_wroom, "water_pump_off")
                 
                 if temperature > TEMP_THRESHOLD:
                     print(f"Temperature {temperature}°C is high. Turning Air Pump and Peltiers ON.")
-                    send_command(ser_wroom, "airpump_ON")
-                    send_command(ser_c3, "peltier1_ON")
-                    send_command(ser_c3, "peltier2_ON")
-                    send_command(ser_c3, "peltier3_ON")
-                    send_command(ser_c3, "peltier4_ON")
-                    send_command(ser_c3, "peltier5_ON")
+                    send_command(ser_wroom, "air_pump_ON")
+                    send_command(ser_c3, "peltier1_on")
+                    send_command(ser_c3, "peltier2_on")
+                    send_command(ser_c3, "peltier3_on")
+                    send_command(ser_c3, "peltier4_on")
+                    send_command(ser_c3, "peltier5_on")
                 else:
                     print(f"Temperature {temperature}°C is normal. Turning Air Pump and Peltiers OFF.")
-                    send_command(ser_wroom, "airpump_OFF")
-                    send_command(ser_c3, "peltier1_OFF")
-                    send_command(ser_c3, "peltier2_OFF")
-                    send_command(ser_c3, "peltier3_OFF")
-                    send_command(ser_c3, "peltier4_OFF")
-                    send_command(ser_c3, "peltier5_OFF")
+                    send_command(ser_wroom, "air_pump_off")
+                    send_command(ser_c3, "peltier1_off")
+                    send_command(ser_c3, "peltier2_off")
+                    send_command(ser_c3, "peltier3_off")
+                    send_command(ser_c3, "peltier4_off")
+                    send_command(ser_c3, "peltier5_off")
 
         except Exception as e:
             print(f"An error occurred: {e}")
