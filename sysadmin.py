@@ -29,7 +29,7 @@ def main():
     print("Starting system administration...")
     while True:
         try:
-            line = ser_uno.readline().decode('utf-8').strip()
+            line = ser_r3.readline().decode('utf-8').strip()
             if line:
                 print(f"Received from R3: {line}")                
                 parts = line.split(',')
