@@ -2,10 +2,16 @@ from machine import Pin, PWM, I2C
 from ssd1306 import SSD1306_I2C
 import time, sys
 
-i2c = I2C(0, sda=Pin(23, pull=Pin.PULL_UP, scl=Pin(24, pull=Pin.PULL_UP)))
-oled = SSD1306_I2C(128, 64, i2c)
-oled.fill(0)
-oled.rect(0, 0, 127, 63, 1)
+i2c = I2C(0, sda=Pin(21, pull=Pin.PULL_UP), scl=Pin(22, pull=Pin.PULL_UP))
+screen = SSD1306_I2C(128, 64, i2c)
+screen.fill(0)
+screen.rect(0, 0, 127, 63, 1)
+screen.text("   WATER PUMP:", 5, 2, 1)
+screen.text("   en/disabled", 5, 12, 1)
+screen.text("    AIR PUMP:", 5, 22, 1)
+screen.text("   en/disabled", 5, 32, 1)
+screen.text("   STATE READY", 5, 42, 1)
+screen.show()
 pwm_ena = PWM(Pin(ena), freq=100, duty=0)
 pwm_enb = PWM(Pin(enb), freq=100, duty=0)
 water_pump_in1 = machine.Pin(18, machine.Pin.OUT)
